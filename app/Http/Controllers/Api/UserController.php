@@ -33,16 +33,16 @@ class UserController extends Controller
     // EOF
 
     //[METHOD : POST ] Login API (User Login to Dashboard) 
-    public function login(Request $parameters){
+    public function loginpost(Request $parameters){
         
         // Data Validation
         $parameters->validate([
-            "email"=>"required|email",
+            "username"=>"required",
             "password"=>"required"
         ]);
         // Credential Validation
          if(Auth::attempt([
-            "email"=>$parameters->email,
+            "username"=>$parameters->username,
             "password"=>$parameters->password
             ])){
         //Success

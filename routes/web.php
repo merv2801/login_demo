@@ -15,24 +15,17 @@ use Illuminate\Foundation\Http\FormRequest;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', function () {
-    return view('users.login');
-})->middleware('throttle:LimitByFive');
+// Route::get('/logout', function () {
+//     return view('users.login');
+// })->middleware('throttle:LimitByFive');
 
-Route::get('/login', function () {
-    return view('users.login');
-})->middleware('throttle:LimitByFive');
-
-Route::get('/dashboard', function () {
-    return view('users.dashboard');
-})->middleware('throttle:LimitByFive');
-
-Route::get('/logout', function () {
-    return view('users.login');
-})->middleware('throttle:LimitByFive');
-
-Route::post("logindetails", [ApiController::class, "index"]);
-
-// Route::get('dashboard',[Controller::class, 'dashboard'])
-// 
-// ->name('dashboard');
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/register', [ApiController::class, 'register'])->name('register')->middleware('throttle:LimitByFive');
+    Route::post('/register', [UserController::class, 'registerpost'])->name('registerpost')->middleware('throttle:LimitByFive');
+    Route::get('/login', [ApiController::class, 'login'])->name('login')->middleware('throttle:LimitByFive');
+    Route::post('/loginpost', [UserController::class, 'loginpost'])->name('loginpost')->middleware('throttle:LimitByFive');
+});
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/dashboard', [ApiController::class, 'dashboardget'])->middleware('throttle:LimitByFive');
+    Route::get('/logout', [ApiController::class, 'logout'])->name('logout')->middleware('throttle:LimitByFive');
+});

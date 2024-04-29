@@ -21,8 +21,8 @@ use Illuminate\Foundation\Http\FormRequest;
 // });
 
 //Unprotected Routes
-Route::post("register", [UserController::class, "register"])->middleware('throttle:LimitByFive');
-Route::post("login", [UserController::class, "login"])->middleware('throttle:LimitByFive');
+Route::post("register", [UserController::class, "registerpost"])->middleware('throttle:LimitByFive');
+Route::post("login", [UserController::class, "loginpost"])->middleware('throttle:LimitByFive');
 
 //Protected Routes
 Route::group([

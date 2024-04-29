@@ -1,16 +1,30 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Requests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller as BaseController;
 
-class ApiController extends BaseController
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
+class ApiController extends Controller
 {
-    use AuthorizesRequests, ValidatesRequests;
+    // Login View
+    public function login(){
+        return view('login');
+    }
 
-    public function index(){
+    // Dashboard View
+    public function dashboardget(){
+        return view('dashboard');
+    }
 
-}
+
+    // Logout View
+    public function logout(){
+        Auth::logout();
+ 
+        return redirect()->route('login');
+    }
+
 }
